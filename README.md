@@ -1,6 +1,6 @@
 **ToDoList Backend Web API**
 
-This repository contains the backend code for a ToDoList application developed in C# using the .NET framework. The project serves as the backbone for managing and organizing tasks in a ToDoList, offering a robust and scalable solution.
+This repository contains the evolving backend code for a ToDoList application developed in C# using the .NET framework. The project serves as the dynamic backbone for managing and organizing tasks in a ToDoList, offering a robust and scalable solution. Please note that the API is currently in active development, and the code is subject to frequent changes and continuous improvement.
 
 **Features:**
 
