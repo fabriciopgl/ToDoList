@@ -17,6 +17,7 @@ This repository contains the evolving backend code for a ToDoList application de
 - **.NET Core:** Framework providing cross-platform compatibility and high performance.
 - **Entity Framework Core:** ORM for database interaction and management.
 - **ASP.NET Core Web API:** Building the RESTful API endpoints.
+- **Dapper:** Utilizing [Dapper](https://github.com/DapperLib/Dapper) for more heavyweight queries, providing efficient and high-performance data access through raw SQL queries.
 
 ## Getting Started 🚦
 
