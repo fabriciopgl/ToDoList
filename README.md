@@ -2,6 +2,14 @@
 
 This repository contains the evolving backend code for a ToDoList application developed in C# using the .NET framework. The project serves as the dynamic backbone for managing and organizing tasks in a ToDoList, offering a robust and scalable solution. Please note that the API is currently in active development, and the code is subject to frequent changes and continuous improvement.
 
+<p align="left">
+   <img alt="License" src="https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge">
+   <img alt="csharp" src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white">
+   <img alt="dotnet" src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white">
+   <img alt="visualstudio" src="https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=visual-studio&logoColor=white">
+   <img alt="sql" src="https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white">
+</p>
+
 ## Features ✨
 
 - **RESTful API:** Utilizing HTTP methods to create, read, update, and delete tasks.
