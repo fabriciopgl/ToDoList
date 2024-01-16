@@ -22,4 +22,11 @@ This repository contains the evolving backend code for a ToDoList application de
 
 1. Clone the repository: `git clone https://github.com/fabriciopgl/ToDoList.git`
 2. Configure your database connection in the `appsettings.json` file.
-3. Run the application using Visual Studio or the command line.
+3. Apply database migrations (make sure to check the [Entity Framework Migrations documentation](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli) for more details) by running:
+   
+   ```bash
+   dotnet ef database update
+
+4. Run the application using Visual Studio or the command line.
+
+Feel free to explore, contribute, and adapt this ToDoList backend for your specific needs. If you have any questions or suggestions, please open an issue or submit a pull request. Happy coding! 🚧
