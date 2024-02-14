@@ -23,8 +23,12 @@ public class TaskItem
 
     public void Update(string title, string description, ETaskStatus status)
     {
-        Title = title;
-        Description = description;
+        if(!string.IsNullOrEmpty(title) || !string.IsNullOrWhiteSpace(title))
+            Title = title;
+
+        if(!string.IsNullOrEmpty(description) || !string.IsNullOrWhiteSpace(description))
+            Description = description;
+
         Status = status;
     }
 }
