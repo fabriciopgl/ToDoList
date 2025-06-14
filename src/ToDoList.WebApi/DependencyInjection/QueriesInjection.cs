@@ -1,4 +1,4 @@
-﻿using ToDoList.Application.Task.Queries;
+﻿using ToDoList.Application.Tasks.Queries;
 
 namespace ToDoList.WebApi.DependencyInjection;
 

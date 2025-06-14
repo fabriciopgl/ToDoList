@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ToDoList.Application\ToDoList.Application.csproj" />
-    <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

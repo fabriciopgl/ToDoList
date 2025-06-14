@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using ToDoList.Domain.Entities;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Domain;
+using ToDoList.Application.Tasks.Models;
 
 namespace ToDoList.Tests.Domain;
 

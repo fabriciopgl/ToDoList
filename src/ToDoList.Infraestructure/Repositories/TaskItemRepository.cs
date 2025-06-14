@@ -1,8 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using ToDoList.Application.Task.Abstraction;
-using ToDoList.Domain.Entities;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Domain;
+using ToDoList.Application.Tasks.Models;
 using ToDoList.Infraestructure.Context;
 
 namespace ToDoList.Infraestructure.Repositories;

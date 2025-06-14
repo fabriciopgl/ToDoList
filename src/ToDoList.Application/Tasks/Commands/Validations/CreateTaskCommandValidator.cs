@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ToDoList.Application.Task.Commands.Validations;
+namespace ToDoList.Application.Tasks.Commands.Validations;
 
 public class CreateTaskCommandValidator : AbstractValidator<CreateTaskCommand>
 {

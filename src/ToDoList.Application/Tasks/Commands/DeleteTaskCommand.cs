@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace ToDoList.Application.Task.Commands;
+namespace ToDoList.Application.Tasks.Commands;
 
 public class DeleteTaskCommand(int id) : IRequest<Result>
 {

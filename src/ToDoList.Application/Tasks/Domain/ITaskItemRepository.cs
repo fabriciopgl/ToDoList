@@ -1,8 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using ToDoList.Domain.Entities;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Models;
 
-namespace ToDoList.Application.Task.Abstraction;
+namespace ToDoList.Application.Tasks.Domain;
 
 public interface ITaskItemRepository
 {

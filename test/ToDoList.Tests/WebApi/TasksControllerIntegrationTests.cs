@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System.Text;
-using ToDoList.Application.Task.Commands;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Models;
 using ToDoList.WebApi;
 
 namespace ToDoList.Tests.WebApi;

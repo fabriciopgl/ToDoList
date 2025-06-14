@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using ToDoList.Domain.Entities;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Domain;
+using ToDoList.Application.Tasks.Models;
 using ToDoList.Infraestructure.Context;
 using ToDoList.Infraestructure.Repositories;
 

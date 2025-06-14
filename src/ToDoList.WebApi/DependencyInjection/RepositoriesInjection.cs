@@ -1,4 +1,4 @@
-﻿using ToDoList.Application.Task.Abstraction;
+﻿using ToDoList.Application.Tasks.Domain;
 using ToDoList.Infraestructure.Repositories;
 
 namespace ToDoList.WebApi.DependencyInjection;

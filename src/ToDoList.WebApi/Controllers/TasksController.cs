@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Application.Task.Abstraction;
-using ToDoList.Application.Task.Commands;
-using ToDoList.Application.Task.Queries;
-using ToDoList.Domain.Entities;
+using ToDoList.Application.Tasks.Commands;
+using ToDoList.Application.Tasks.Domain;
+using ToDoList.Application.Tasks.Queries;
 
 namespace ToDoList.WebApi.Controllers;
 

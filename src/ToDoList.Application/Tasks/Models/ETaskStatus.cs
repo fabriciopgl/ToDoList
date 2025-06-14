@@ -1,4 +1,4 @@
-﻿namespace ToDoList.Domain.Models;
+﻿namespace ToDoList.Application.Tasks.Models;
 
 public enum ETaskStatus
 {

@@ -1,6 +1,6 @@
-﻿using ToDoList.Domain.Entities;
+﻿using ToDoList.Application.Tasks.Domain;
 
-namespace ToDoList.Application.Task.Queries
+namespace ToDoList.Application.Tasks.Queries
 {
     public interface ITaskQueries
     {

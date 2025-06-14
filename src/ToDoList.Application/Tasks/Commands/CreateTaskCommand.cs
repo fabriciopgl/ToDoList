@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Models;
 
-namespace ToDoList.Application.Task.Commands;
+namespace ToDoList.Application.Tasks.Commands;
 
 public class CreateTaskCommand(string title, string description, DateTime dueDate, ETaskStatus status) : IRequest<Result<int>>
 {

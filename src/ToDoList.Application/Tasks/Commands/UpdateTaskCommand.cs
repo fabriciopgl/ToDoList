@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Models;
 
-namespace ToDoList.Application.Task.Commands;
+namespace ToDoList.Application.Tasks.Commands;
 
 public class UpdateTaskCommand(int id, string title, string description, ETaskStatus status) : IRequest<Result>
 {

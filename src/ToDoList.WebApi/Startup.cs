@@ -1,5 +1,3 @@
-using ToDoList.Application.Task.Abstraction;
-using ToDoList.Infraestructure.Repositories;
 using ToDoList.WebApi.DependencyInjection;
 using ToDoList.WebApi.Extensions;
 

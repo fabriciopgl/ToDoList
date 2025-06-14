@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using ToDoList.Application.Task.Abstraction;
-using ToDoList.Application.Task.Commands;
-using ToDoList.Domain.Entities;
+using ToDoList.Application.Tasks.Commands;
+using ToDoList.Application.Tasks.Domain;
 
-namespace ToDoList.Application.Task.Handlers;
+namespace ToDoList.Application.Tasks.Handlers;
 
 public class TaskCommandsHandler(ITaskItemRepository taskItemRepository) : IRequestHandler<CreateTaskCommand, Result<int>>,
                                                                            IRequestHandler<UpdateTaskCommand, Result>,
@@ -22,7 +21,7 @@ public class TaskCommandsHandler(ITaskItemRepository taskItemRepository) : IRequ
     public async Task<Result> Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
     {
         var updateResult = await taskItemRepository.UpdateTask(request.Id, request.Title, request.Description, request.Status, cancellationToken);
-        if(updateResult.IsFailure)
+        if (updateResult.IsFailure)
             return Result.Failure(updateResult.Error);
 
         return Result.Success();
@@ -31,7 +30,7 @@ public class TaskCommandsHandler(ITaskItemRepository taskItemRepository) : IRequ
     public async Task<Result> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
     {
         var result = await taskItemRepository.DeleteTask(request.Id, cancellationToken);
-        if(result.IsFailure)
+        if (result.IsFailure)
             return Result.Failure(result.Error);
 
         return Result.Success();

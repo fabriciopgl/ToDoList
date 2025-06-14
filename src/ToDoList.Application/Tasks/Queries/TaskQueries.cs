@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using ToDoList.Domain.Entities;
+using ToDoList.Application.Tasks.Domain;
 
-namespace ToDoList.Application.Task.Queries;
+namespace ToDoList.Application.Tasks.Queries;
 
 public class TaskQueries(IConfiguration configuration) : ITaskQueries
 {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Models;
 
-namespace ToDoList.Domain.Entities;
+namespace ToDoList.Application.Tasks.Domain;
 
 [Table("Tasks")]
 public class TaskItem
@@ -23,10 +23,10 @@ public class TaskItem
 
     public void Update(string title, string description, ETaskStatus status)
     {
-        if(!string.IsNullOrEmpty(title) || !string.IsNullOrWhiteSpace(title))
+        if (!string.IsNullOrEmpty(title) || !string.IsNullOrWhiteSpace(title))
             Title = title;
 
-        if(!string.IsNullOrEmpty(description) || !string.IsNullOrWhiteSpace(description))
+        if (!string.IsNullOrEmpty(description) || !string.IsNullOrWhiteSpace(description))
             Description = description;
 
         Status = status;

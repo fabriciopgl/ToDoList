@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using Moq;
-using ToDoList.Application.Task.Abstraction;
-using ToDoList.Application.Task.Commands;
-using ToDoList.Application.Task.Handlers;
-using ToDoList.Domain.Entities;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Tasks.Commands;
+using ToDoList.Application.Tasks.Domain;
+using ToDoList.Application.Tasks.Handlers;
+using ToDoList.Application.Tasks.Models;
 
 namespace ToDoList.Tests.Application.Tasks;
 

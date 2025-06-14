@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToDoList.Domain.Entities;
+using ToDoList.Application.Tasks.Domain;
 
 namespace ToDoList.Infraestructure.Context;
 
