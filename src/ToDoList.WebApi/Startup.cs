@@ -1,4 +1,6 @@
+using AspNetCoreRateLimit;
 using TodoList.WebApi.DependencyInjection;
+using TodoList.WebApi.Middlewares;
 using ToDoList.WebApi.DependencyInjection;
 
 namespace ToDoList.WebApi;
@@ -17,8 +19,9 @@ public class Startup(IConfiguration configuration)
         services.AddRepositories();
         services.AddHealthChecks();
         services.AddDatabase(Configuration);
-        services.AddJwtAuthentication(Configuration);
         services.AddGlobalExceptionHandler();
+        services.AddRateLimiting(Configuration);
+        services.AddJwtAuthentication(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -30,10 +33,11 @@ public class Startup(IConfiguration configuration)
 
         app.UseRouting();
 
-        // Authentication & Authorization middleware
+        app.UseMiddleware<JsonRateLimitMiddleware>();
+
+        app.UseIpRateLimiting();
         app.UseAuthentication();
         app.UseAuthorization();
-
         app.UseExceptionHandler();
 
         app.UseEndpoints(endpoints =>
