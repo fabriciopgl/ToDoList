@@ -12,12 +12,12 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddQueries();
-        services.AddUserServices();
         services.AddMediatR();
         services.AddVersioning();
         services.AddControllers();
         services.AddRepositories();
         services.AddHealthChecks();
+        services.AddUserServices();
         services.AddDatabase(Configuration);
         services.AddGlobalExceptionHandler();
         services.AddRateLimiting(Configuration);
@@ -26,41 +26,6 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
         services.AddCorsConfiguration(Configuration);
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
-        {
-            app.UseCors("DevelopmentPolicy");
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            app.UseHsts();
-            app.UseHttpsRedirection();
-            app.UseCors("ProductionPolicy");
-        }
-
-        app.Use((context, next) =>
-        {
-            context.Response.Headers.XContentTypeOptions = "nosniff";
-            context.Response.Headers.XFrameOptions = "DENY";
-            context.Response.Headers.XXSSProtection = "1; mode=block";
-
-            return next();
-        });
-
-        app.UseRouting();
-
-        app.UseMiddleware<JsonRateLimitMiddleware>();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseExceptionHandler();
-
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-            endpoints.MapHealthChecks("/health");
-        });
-    }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
+        ApplicationBuilderInjection.Configure(app, env);
 }
