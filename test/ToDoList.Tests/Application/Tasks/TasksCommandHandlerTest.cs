@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using Moq;
-using ToDoList.Application.Tasks.Commands;
-using ToDoList.Application.Tasks.Domain;
-using ToDoList.Application.Tasks.Handlers;
-using ToDoList.Application.Tasks.Models;
+using ToDoList.Application.Todos.Commands;
+using ToDoList.Application.Todos.Domain;
+using ToDoList.Application.Todos.Handlers;
+using ToDoList.Application.Todos.Models;
 
 namespace ToDoList.Tests.Application.Tasks;
 
@@ -13,59 +13,59 @@ public class TasksCommandHandlerTest
     public async Task Handle_CreateTaskCommand_Success()
     {
         // Arrange
-        var mockRepository = new Mock<ITaskItemRepository>();
-        var handler = new TaskCommandsHandler(mockRepository.Object);
+        var mockRepository = new Mock<ITodoRepository>();
+        var handler = new CreateTodoHandler(mockRepository.Object);
 
-        var createTaskCommand = new CreateTaskCommand("Sample Task", "Sample description", DateTime.Now.AddDays(7), ETaskStatus.Created);
+        var createTaskCommand = new CreateTodoCommand("Sample Task", "Sample description", DateTime.Now.AddDays(7), ETodoStatus.Created);
 
         var expectedId = 1;
         var expectedResult = Result.Success(expectedId);
 
-        mockRepository.Setup(repo => repo.AddTask(It.IsAny<TaskItem>(), It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new TaskItem(expectedId, createTaskCommand.Title, createTaskCommand.Description, createTaskCommand.DueDate, createTaskCommand.Status));
+        mockRepository.Setup(repo => repo.Add(It.IsAny<Todo>(), It.IsAny<CancellationToken>()))
+                      .ReturnsAsync(Todo.Create(createTaskCommand.Title, createTaskCommand.Description, createTaskCommand.DueDate, createTaskCommand.Status));
 
         // Act
         var result = await handler.Handle(createTaskCommand, CancellationToken.None);
 
         // Assert
         Assert.Equal(expectedResult, result);
-        mockRepository.Verify(repo => repo.AddTask(It.IsAny<TaskItem>(), It.IsAny<CancellationToken>()), Times.Once);
+        mockRepository.Verify(repo => repo.Add(It.IsAny<Todo>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
     public async Task Handle_UpdateTaskCommand_Success()
     {
         // Arrange
-        var mockRepository = new Mock<ITaskItemRepository>();
-        var handler = new TaskCommandsHandler(mockRepository.Object);
+        var mockRepository = new Mock<ITodoRepository>();
+        var handler = new UpdateTodoHandler(mockRepository.Object);
 
-        var updateTaskCommand = new UpdateTaskCommand(1, "Update task", "Update description", ETaskStatus.Pending);
+        var updateTaskCommand = new UpdateTodoCommand(1, "Update task", "Update description", ETodoStatus.Pending);
 
         var expectedUpdateResult = Result.Success();
 
-        mockRepository.Setup(repo => repo.UpdateTask(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ETaskStatus>(), It.IsAny<CancellationToken>()))
-              .ReturnsAsync(Result.Success(new TaskItem(updateTaskCommand.Id, updateTaskCommand.Title, updateTaskCommand.Description, DateTime.Now.AddDays(7), updateTaskCommand.Status)));
+        mockRepository.Setup(repo => repo.Update(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ETodoStatus>(), It.IsAny<CancellationToken>()))
+              .ReturnsAsync(Result.Success(Todo.Create(updateTaskCommand.Title, updateTaskCommand.Description, DateTime.Now.AddDays(7), updateTaskCommand.Status)));
 
         // Act
         var result = await handler.Handle(updateTaskCommand, CancellationToken.None);
 
         // Assert
         Assert.Equal(expectedUpdateResult, result);
-        mockRepository.Verify(repo => repo.UpdateTask(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ETaskStatus>(), It.IsAny<CancellationToken>()), Times.Once);
+        mockRepository.Verify(repo => repo.Update(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ETodoStatus>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
     public async Task Handle_DeleteTaskCommand_Success()
     {
         // Arrange
-        var mockRepository = new Mock<ITaskItemRepository>();
-        var handler = new TaskCommandsHandler(mockRepository.Object);
+        var mockRepository = new Mock<ITodoRepository>();
+        var handler = new DeleteTodoHandler(mockRepository.Object);
 
-        var deleteTaskCommand = new DeleteTaskCommand(1);
+        var deleteTaskCommand = new DeleteTodoCommand(1);
 
         var expectedDeleteResult = Result.Success();
 
-        mockRepository.Setup(repo => repo.DeleteTask(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        mockRepository.Setup(repo => repo.Delete(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Success());
 
         // Act
@@ -73,6 +73,6 @@ public class TasksCommandHandlerTest
 
         // Assert
         Assert.Equal(expectedDeleteResult, result);
-        mockRepository.Verify(repo => repo.DeleteTask(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Once);
+        mockRepository.Verify(repo => repo.Delete(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

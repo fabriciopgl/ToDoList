@@ -7,7 +7,8 @@ public class Program
     public static void Main(string[] args)
     {
         Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
+            .WriteTo
+            .Console()
             .CreateBootstrapLogger();
 
         Log.Information("Starting application");

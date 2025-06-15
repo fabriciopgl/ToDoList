@@ -1,22 +1,24 @@
 ﻿using FluentValidation;
 
-namespace ToDoList.Application.Tasks.Commands.Validations;
+namespace ToDoList.Application.Todos.Commands.Validations;
 
-public class CreateTaskCommandValidator : AbstractValidator<CreateTaskCommand>
+public class CreateTodoValidator : AbstractValidator<CreateTodoCommand>
 {
-    public CreateTaskCommandValidator()
+    public CreateTodoValidator()
     {
         RuleFor(c => c.Title)
             .NotEmpty()
-            .WithMessage("Task title is required")
+            .WithMessage("Todo title is required")
             .NotNull()
-            .WithMessage("Task title cannot be null")
+            .WithMessage("Todo title cannot be null")
             .MaximumLength(100)
             .WithMessage("Max lenght for title is 100");
 
         RuleFor(c => c.Description)
+            .NotNull()
+            .WithMessage("Todo description is required")
             .NotEmpty()
-            .WithMessage("Task description is required");
+            .WithMessage("Todo description is required");
 
         RuleFor(c => c.DueDate)
             .Must(c => c.Date >= DateTime.Today)

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using ToDoList.Application.Tasks.Domain;
-using ToDoList.Application.Tasks.Models;
+using ToDoList.Application.Todos.Domain;
+using ToDoList.Application.Todos.Models;
 using ToDoList.Infraestructure.Context;
 using ToDoList.Infraestructure.Repositories;
 
@@ -13,14 +13,14 @@ public class TaskItemRepositoryTests
     public async Task GetTaskByIdAsync_ExistingId_ShouldReturnTask()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
-        var existingTask = new TaskItem(2587, "Existing Task", "Existing Description", DateTime.Now, ETaskStatus.Pending);
+        var existingTask = Todo.Create("Existing Task", "Existing Description", DateTime.Now, ETodoStatus.Pending);
         dbContext.TaskItems.Add(existingTask);
         await dbContext.SaveChangesAsync();
 
@@ -37,12 +37,12 @@ public class TaskItemRepositoryTests
     public async Task GetTaskByIdAsync_NonExistingId_ShouldReturnNull()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
         // Act
         var retrievedTask = await repository.GetTaskByIdAsync(999, CancellationToken.None);
@@ -55,17 +55,17 @@ public class TaskItemRepositoryTests
     public async Task AddTask_ShouldAddTaskToDatabase()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
-        var taskToAdd = new TaskItem(8742, "Test Task", "Test Description", DateTime.Now, ETaskStatus.Pending);
+        var taskToAdd = Todo.Create("Test Task", "Test Description", DateTime.Now, ETodoStatus.Pending);
 
         // Act
-        var addedTask = await repository.AddTask(taskToAdd, CancellationToken.None);
+        var addedTask = await repository.Add(taskToAdd, CancellationToken.None);
 
         // Assert
         addedTask.Should().NotBeNull();
@@ -80,19 +80,19 @@ public class TaskItemRepositoryTests
     public async Task UpdateTask_ExistingId_ShouldUpdateTask()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
-        var existingTask = new TaskItem(9871, "Existing Task", "Existing Description", DateTime.Now, ETaskStatus.Pending);
+        var existingTask = Todo.Create("Existing Task", "Existing Description", DateTime.Now, ETodoStatus.Pending);
         dbContext.TaskItems.Add(existingTask);
         await dbContext.SaveChangesAsync();
 
         // Act
-        var updateResult = await repository.UpdateTask(existingTask.Id, "Updated Task", "Updated Description", ETaskStatus.Pending, CancellationToken.None);
+        var updateResult = await repository.Update(existingTask.Id, "Updated Task", "Updated Description", ETodoStatus.Pending, CancellationToken.None);
 
         // Assert
         updateResult.IsSuccess.Should().BeTrue();
@@ -101,22 +101,22 @@ public class TaskItemRepositoryTests
         updatedTask.Should().NotBeNull();
         updatedTask!.Title.Should().Be("Updated Task");
         updatedTask!.Description.Should().Be("Updated Description");
-        updatedTask!.Status.Should().Be(ETaskStatus.Pending);
+        updatedTask!.Status.Should().Be(ETodoStatus.Pending);
     }
 
     [Fact]
     public async Task UpdateTask_NonExistingId_ShouldReturnFailure()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
         // Act
-        var updateResult = await repository.UpdateTask(999, "Updated Task", "Updated Description", ETaskStatus.Pending, CancellationToken.None);
+        var updateResult = await repository.Update(999, "Updated Task", "Updated Description", ETodoStatus.Pending, CancellationToken.None);
 
         // Assert
         updateResult.IsFailure.Should().BeTrue();
@@ -127,19 +127,19 @@ public class TaskItemRepositoryTests
     public async Task DeleteTask_ExistingId_ShouldDeleteTask()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
-        var existingTask = new TaskItem(7851, "Existing Task", "Existing Description", DateTime.Now, ETaskStatus.Pending);
+        var existingTask = Todo.Create("Existing Task", "Existing Description", DateTime.Now, ETodoStatus.Pending);
         dbContext.TaskItems.Add(existingTask);
         await dbContext.SaveChangesAsync();
 
         // Act
-        var deleteResult = await repository.DeleteTask(existingTask.Id, CancellationToken.None);
+        var deleteResult = await repository.Delete(existingTask.Id, CancellationToken.None);
 
         // Assert
         deleteResult.IsSuccess.Should().BeTrue();
@@ -152,15 +152,15 @@ public class TaskItemRepositoryTests
     public async Task DeleteTask_NonExistingId_ShouldReturnFailure()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<TaskItemDbContext>()
+        var options = new DbContextOptionsBuilder<TodoDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var dbContext = new TaskItemDbContext(options);
-        var repository = new TaskItemRepository(dbContext);
+        using var dbContext = new TodoDbContext(options);
+        var repository = new TodoRepository(dbContext);
 
         // Act
-        var deleteResult = await repository.DeleteTask(999, CancellationToken.None);
+        var deleteResult = await repository.Delete(999, CancellationToken.None);
 
         // Assert
         deleteResult.IsFailure.Should().BeTrue();

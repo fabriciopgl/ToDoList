@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
 using System.Reflection;
-using ToDoList.WebApi.Extensions.Validation;
+using ToDoList.WebApi.Extensions;
 
 namespace ToDoList.WebApi.DependencyInjection;
 
-public static class MediatRInjection
+public static class MediatorInjection
 {
     public static void AddMediatR(this IServiceCollection services)
     {

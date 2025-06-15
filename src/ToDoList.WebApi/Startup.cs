@@ -9,14 +9,13 @@ public class Startup(IConfiguration configuration)
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDatabase(Configuration);
-        services.AddVersioning();
-        services.AddMediatR();
         services.AddQueries();
+        services.AddMediatR();
+        services.AddVersioning();
+        services.AddControllers();
         services.AddRepositories();
         services.AddHealthChecks();
-        services.AddControllers();
-
+        services.AddDatabase(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
