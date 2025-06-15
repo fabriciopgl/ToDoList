@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System.Text;
-using ToDoList.Application.Task.Commands;
-using ToDoList.Domain.Models;
+using ToDoList.Application.Todos.Models;
 using ToDoList.WebApi;
 
 namespace ToDoList.Tests.WebApi;
@@ -59,7 +58,7 @@ public class TasksControllerIntegrationTests : IClassFixture<WebApplicationFacto
         // Arrange
         var client = _factory.CreateClient();
 
-        var createTaskCommand = new CreateTaskCommand("New Task", "Task Description", DateTime.Now.AddDays(7), ETaskStatus.Pending);
+        var createTaskCommand = new CreateTaskCommand("New Task", "Task Description", DateTime.Now.AddDays(7), ETodoStatus.Pending);
 
         var jsonContent = new StringContent(JsonConvert.SerializeObject(createTaskCommand), Encoding.UTF8, "application/json");
 

@@ -1,7 +1,5 @@
-using ToDoList.Application.Task.Abstraction;
-using ToDoList.Infraestructure.Repositories;
+using TodoList.WebApi.DependencyInjection;
 using ToDoList.WebApi.DependencyInjection;
-using ToDoList.WebApi.Extensions;
 
 namespace ToDoList.WebApi;
 
@@ -11,14 +9,14 @@ public class Startup(IConfiguration configuration)
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDatabase(Configuration);
-        services.AddVersioning();
-        services.AddMediatR();
         services.AddQueries();
+        services.AddMediatR();
+        services.AddVersioning();
+        services.AddControllers();
         services.AddRepositories();
         services.AddHealthChecks();
-        services.AddControllers();
-
+        services.AddDatabase(Configuration);
+        services.AddGlobalExceptionHandler();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -29,7 +27,7 @@ public class Startup(IConfiguration configuration)
         }
 
         app.UseRouting();
-        app.UseGlobalExceptionHandler();
+        app.UseExceptionHandler();
 
         app.UseEndpoints(endpoints =>
         {
