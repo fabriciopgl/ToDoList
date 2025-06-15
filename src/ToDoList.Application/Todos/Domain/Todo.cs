@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using ToDoList.Application.Todos.Models;
+using TodoList.Application.Todos.Models.Enums;
 
 namespace ToDoList.Application.Todos.Domain;
 
@@ -11,18 +11,20 @@ public class Todo
     public string Description { get; private set; }
     public DateTime DueDate { get; init; }
     public ETodoStatus Status { get; private set; }
+    public int UserId { get; init; }
 
-    private Todo(int id, string title, string description, DateTime dueDate, ETodoStatus status)
+    private Todo(int id, string title, string description, DateTime dueDate, ETodoStatus status, int userId)
     {
         Id = id;
         Title = title;
         Description = description;
         DueDate = dueDate;
         Status = status;
+        UserId = userId;
     }
 
-    public static Todo Create(string title, string description, DateTime dueDate, ETodoStatus status) =>
-        new(0, title, description, dueDate, status);
+    public static Todo Create(string title, string description, DateTime dueDate, ETodoStatus status, int userId) =>
+        new(0, title, description, dueDate, status, userId);
 
     public void Update(string title, string description, ETodoStatus status)
     {

@@ -11,10 +11,16 @@ public class TodoQueries(IConfiguration configuration, ITodoDbContext dbContext)
 {
     public async Task<Todo?> GetById(int id, CancellationToken cancellationToken)
     {
-
         return await dbContext.Todos
             .AsNoTracking()
             .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+    }
+
+    public async Task<Todo?> GetByIdAndUserIdAsync(int id, int userId, CancellationToken cancellationToken)
+    {
+        return await dbContext.Todos
+            .AsNoTracking()
+            .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId, cancellationToken);
     }
 
     public async Task<IEnumerable<Todo>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken)
@@ -27,6 +33,23 @@ public class TodoQueries(IConfiguration configuration, ITodoDbContext dbContext)
                              OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
 
         var command = new CommandDefinition(sql, new { Offset = (page - 1) * pageSize, PageSize = pageSize }, cancellationToken: cancellationToken);
+        return await connection.QueryAsync<Todo>(command);
+    }
+
+    public async Task<IEnumerable<Todo>> GetByUserIdAsync(int userId, int page, int pageSize, CancellationToken cancellationToken)
+    {
+        using var connection = new SqlConnection(configuration.GetConnectionString("Todo"));
+
+        const string sql = @"SELECT *
+                               FROM Todos
+                              WHERE UserId = @UserId
+                              ORDER BY DueDate ASC, Id DESC
+                             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
+
+        var command = new CommandDefinition(sql,
+            new { UserId = userId, Offset = (page - 1) * pageSize, PageSize = pageSize },
+            cancellationToken: cancellationToken);
+
         return await connection.QueryAsync<Todo>(command);
     }
 }

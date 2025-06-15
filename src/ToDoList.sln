@@ -1,13 +1,12 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.WebApi", "ToDoList.WebApi\TodoList.WebApi.csproj", "{0FEBAD17-BD14-4F55-80ED-6B24AE1DF00B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.WebApi", "TodoList.WebApi\TodoList.WebApi.csproj", "{0FEBAD17-BD14-4F55-80ED-6B24AE1DF00B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Application", "ToDoList.Application\TodoList.Application.csproj", "{530908FA-938C-4361-99D9-2A4E6C5D4151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Application", "TodoList.Application\TodoList.Application.csproj", "{530908FA-938C-4361-99D9-2A4E6C5D4151}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Infraestructure", "ToDoList.Infraestructure\TodoList.Infraestructure.csproj", "{F95F1C8C-0587-44CF-BCAC-67D05E4CAD4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Infraestructure", "TodoList.Infraestructure\TodoList.Infraestructure.csproj", "{F95F1C8C-0587-44CF-BCAC-67D05E4CAD4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Core", "TodoList.Core\TodoList.Core.csproj", "{C00464E4-225F-4282-BDC4-0061BD9550A0}"
 EndProject
