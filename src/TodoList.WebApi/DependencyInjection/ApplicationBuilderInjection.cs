@@ -1,4 +1,5 @@
-﻿using TodoList.WebApi.Middlewares;
+﻿using Scalar.AspNetCore;
+using TodoList.WebApi.Middlewares;
 
 namespace TodoList.WebApi.DependencyInjection;
 
@@ -23,14 +24,11 @@ public static class ApplicationBuilderInjection
             context.Response.Headers.XContentTypeOptions = "nosniff";
             context.Response.Headers.XFrameOptions = "DENY";
             context.Response.Headers.XXSSProtection = "1; mode=block";
-
             return next();
         });
 
         app.UseRouting();
-
         app.UseMiddleware<JsonRateLimitMiddleware>();
-
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseExceptionHandler();
@@ -39,6 +37,21 @@ public static class ApplicationBuilderInjection
         {
             endpoints.MapControllers();
             endpoints.MapHealthChecks("/health");
+
+            if (env.IsDevelopment())
+            {
+                endpoints.MapOpenApi();
+                endpoints.MapScalarApiReference(options =>
+                {
+                    options
+                        .WithTheme(ScalarTheme.BluePlanet)
+                        .WithCustomCss("""
+                            :root {
+                                --scalar-font: 'JetBrains Mono', monospace;
+                            }
+                            """);
+                });
+            }
         });
     }
 }
