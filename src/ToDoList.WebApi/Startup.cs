@@ -10,12 +10,14 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddQueries();
+        services.AddUserServices();
         services.AddMediatR();
         services.AddVersioning();
         services.AddControllers();
         services.AddRepositories();
         services.AddHealthChecks();
         services.AddDatabase(Configuration);
+        services.AddJwtAuthentication(Configuration);
         services.AddGlobalExceptionHandler();
     }
 
@@ -27,6 +29,11 @@ public class Startup(IConfiguration configuration)
         }
 
         app.UseRouting();
+
+        // Authentication & Authorization middleware
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseExceptionHandler();
 
         app.UseEndpoints(endpoints =>

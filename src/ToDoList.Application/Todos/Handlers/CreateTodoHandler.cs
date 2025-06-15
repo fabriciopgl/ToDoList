@@ -9,7 +9,7 @@ public class CreateTodoHandler(ITodoRepository todoRepository) : IRequestHandler
 {
     public async Task<Result<int>> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
-        Todo todo = Todo.Create(request.Title, request.Description, request.DueDate, request.Status);
+        Todo todo = Todo.Create(request.Title, request.Description, request.DueDate, request.Status, request.UserId);
 
         var newTask = await todoRepository.Add(todo, cancellationToken);
 
