@@ -1,5 +1,4 @@
 using TodoList.WebApi.DependencyInjection;
-using TodoList.WebApi.Middlewares;
 using ToDoList.WebApi.DependencyInjection;
 
 namespace ToDoList.WebApi;
