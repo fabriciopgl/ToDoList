@@ -1,23 +1,22 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using TodoList.Application.Todos.Domain;
 using ToDoList.Application.Todos.Domain;
-using ToDoList.Application.Todos.Models;
-using ToDoList.Infraestructure.Context;
 
 namespace ToDoList.Infraestructure.Repositories;
 
-public class TodoRepository(TodoDbContext dbContext) : ITodoRepository
+public class TodoRepository(ITodoDbContext dbContext) : ITodoRepository
 {
     public async Task<Todo?> GetTaskByIdAsync(int id, CancellationToken cancellationToken)
     {
         return await dbContext
-            .TaskItems
+            .Todos
             .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 
     public async Task<Todo> Add(Todo toAdd, CancellationToken cancellationToken)
     {
-        dbContext.TaskItems.Add(toAdd);
+        dbContext.Todos.Add(toAdd);
         await dbContext.SaveChangesAsync(cancellationToken);
         return toAdd;
     }
@@ -29,11 +28,11 @@ public class TodoRepository(TodoDbContext dbContext) : ITodoRepository
 
     public async Task<Result> Delete(int taskId, CancellationToken cancellationToken)
     {
-        var task = await dbContext.TaskItems.FindAsync([taskId, cancellationToken], cancellationToken: cancellationToken);
+        var task = await dbContext.Todos.FindAsync([taskId, cancellationToken], cancellationToken: cancellationToken);
         if (task is null) 
             return Result.Failure("Cannot find Task to delete");
 
-        dbContext.TaskItems.Remove(task);
+        dbContext.Todos.Remove(task);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using System.Reflection;
-using ToDoList.WebApi.Extensions;
+using TodoList.Core.Validation;
 
 namespace ToDoList.WebApi.DependencyInjection;
 

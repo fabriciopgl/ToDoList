@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TodoList.Application.Todos.Domain;
 using ToDoList.Application.Todos.Domain;
 
-namespace ToDoList.Infraestructure.Context;
+namespace TodoList.Infraestructure.Context;
 
-public class TodoDbContext(DbContextOptions options) : DbContext(options)
+public class TodoDbContext(DbContextOptions options) : DbContext(options), ITodoDbContext
 {
-    public DbSet<Todo> TaskItems { get; set; }
+    public DbSet<Todo> Todos{ get; set; }
 }

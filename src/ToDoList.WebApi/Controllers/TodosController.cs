@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Application.Todos.Commands;
-using ToDoList.Application.Todos.Domain;
 using ToDoList.Application.Todos.Queries;
 
 namespace ToDoList.WebApi.Controllers;
@@ -10,10 +9,10 @@ namespace ToDoList.WebApi.Controllers;
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
 
-public class TodosController(ITodoRepository todoRepository, ITodoQueries todoQueries, IMediator mediator) : ControllerBase
+public class TodosController(ITodoQueries todoQueries, IMediator mediator) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetTodosAsync([FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllPaginated([FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
     {
         if (pageSize > 10)
             return BadRequest("The maximum page length allowed is 10.");
@@ -28,11 +27,11 @@ public class TodosController(ITodoRepository todoRepository, ITodoQueries todoQu
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
-        var task = await todoRepository.GetTaskByIdAsync(id, cancellationToken);
-        if (task == null)
+        var todo = await todoQueries.GetById(id, cancellationToken);
+        if (todo is null)
             return NotFound();
 
-        return Ok(task);
+        return Ok(todo);
     }
 
     [HttpPost]
@@ -48,12 +47,12 @@ public class TodosController(ITodoRepository todoRepository, ITodoQueries todoQu
             result.Value);
     }
 
-    [HttpPut]
+    [HttpPatch]
     public async Task<IActionResult> Update(UpdateTodoCommand command, CancellationToken cancellationToken)
     {
         var taskResult = await mediator.Send(command, cancellationToken);
         if (taskResult.IsFailure)
-            return BadRequest(taskResult.Error);
+            return UnprocessableEntity(taskResult.Error);
 
         return NoContent();
     }
@@ -65,6 +64,6 @@ public class TodosController(ITodoRepository todoRepository, ITodoQueries todoQu
         if (result.IsFailure)
             return BadRequest(result.Error);
 
-        return Ok();
+        return NoContent();
     }
 }

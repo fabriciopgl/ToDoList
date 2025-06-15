@@ -2,10 +2,12 @@
 
 namespace ToDoList.WebApi.Extensions;
 
-public static class ExceptionHandlerExtensions
+public static class ApplicationBuilderExtensions
 {
     public static IApplicationBuilder UseGlobalExceptionHandler(this IApplicationBuilder builder)
     {
-        return builder.UseMiddleware<ExceptionHandlerMiddleware>();
+        builder.UseMiddleware<ExceptionHandlerMiddleware>();
+
+        return builder;
     }
 }
