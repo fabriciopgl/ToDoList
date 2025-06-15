@@ -10,6 +10,7 @@ namespace TodoList.WebApi.Controllers;
 [ApiController]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/[controller]")]
+
 public class AuthController(IMediator mediator, IUserQueries userQueries) : ControllerBase
 {
     [HttpPost("register")]

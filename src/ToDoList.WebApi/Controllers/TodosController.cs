@@ -22,7 +22,6 @@ public class TodosController(ITodoQueries todoQueries, IMediator mediator) : Con
             return BadRequest("The maximum page length allowed is 10.");
 
         var tasks = await todoQueries.GetByUserIdAsync(User.GetCurrentUserId(), page, pageSize, cancellationToken);
-
         if (!tasks.Any())
             return NotFound();
 
@@ -33,7 +32,6 @@ public class TodosController(ITodoQueries todoQueries, IMediator mediator) : Con
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
         var todo = await todoQueries.GetByIdAndUserIdAsync(id, User.GetCurrentUserId(), cancellationToken);
-
         if (todo is null)
             return NotFound();
 
@@ -70,14 +68,9 @@ public class TodosController(ITodoQueries todoQueries, IMediator mediator) : Con
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var todo = await todoQueries.GetByIdAndUserIdAsync(id, User.GetCurrentUserId(), cancellationToken);
-        if (todo is null)
-            return NotFound();
-
-        var command = new DeleteTodoCommand(id);
-        var result = await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(new DeleteTodoCommand(id), cancellationToken);
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return NotFound(result.Error);
 
         return NoContent();
     }

@@ -26,13 +26,9 @@ public class TodoRepository(ITodoDbContext dbContext) : ITodoRepository
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<Result> Delete(int taskId, CancellationToken cancellationToken)
+    public async Task<Result> Delete(Todo todo, CancellationToken cancellationToken)
     {
-        var task = await dbContext.Todos.FindAsync([taskId, cancellationToken], cancellationToken: cancellationToken);
-        if (task is null) 
-            return Result.Failure("Cannot find Task to delete");
-
-        dbContext.Todos.Remove(task);
+        dbContext.Todos.Remove(todo);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

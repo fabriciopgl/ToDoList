@@ -9,7 +9,11 @@ public class DeleteTodoHandler(ITodoRepository todoRepository) : IRequestHandler
 {
     public async Task<Result> Handle(DeleteTodoCommand request, CancellationToken cancellationToken)
     {
-        var result = await todoRepository.Delete(request.Id, cancellationToken);
+        var todo = await todoRepository.GetTaskByIdAsync(request.Id, cancellationToken);
+        if (todo is null)
+            return Result.Failure("Todo task not found.");
+
+        var result = await todoRepository.Delete(todo, cancellationToken);
         if (result.IsFailure)
             return Result.Failure(result.Error);
 
