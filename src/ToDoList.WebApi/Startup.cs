@@ -17,6 +17,7 @@ public class Startup(IConfiguration configuration, IWebHostEnvironment environme
         services.AddRepositories();
         services.AddHealthChecks();
         services.AddUserServices();
+        services.AddDocumentation();
         services.AddDatabase(Configuration);
         services.AddGlobalExceptionHandler();
         services.AddRateLimiting(Configuration);
